@@ -3,9 +3,9 @@ from server import *
 
 from itertools import combinations
 
-default_dance = Default_Server()
+server = Default_Server()
 
-ticker_list = default_dance.stock_collection.tickers_list()
+ticker_list = server.stock_collection.tickers_list()
 
 start = "20071201"
 end = "20090630"
@@ -16,6 +16,34 @@ def feed_to_dict(booolla):
         haha.update(x)
     return haha
 
+def fetch_matrix_ts(ticker, start=None, end=None):
+    a = server.stock_collection.retrieve_ts(ticker, start, end)
+    b = feed_to_dict(a)
+    c = []
+    for x in b.keys():
+        k = b[x]
+        k.insert(0, int(x))
+        c.append(k)
+    return c
+
+'''
+Format of output:
+[
+    [
+        symbol, [
+                    [date, open, high, low, close, volume]
+                    ...
+                ]
+    ]
+    ...
+]
+'''
+def fetch_multiple_matrix_ts(tickers, start=None, end=None):
+    a = []
+    for x in tickers:
+        a.append( fetch_matrix_ts(x, start, end) )
+    b = list(zip(tickers, a))
+    return b
 
 def calculate_insert_mesh(list_of_tickers, start, end):
     ticker_combinations = list(combinations(list_of_tickers, 2))
@@ -23,14 +51,15 @@ def calculate_insert_mesh(list_of_tickers, start, end):
     c = 0
     n = len(ticker_combinations)
 
+    result = []
     '''
     This part is for processing the data so it's a single matrix formatted as
     columns: open high low close volume
     rows: each corresponding time
     '''
     for i in ticker_combinations:
-        first = default_dance.stock_collection.retrieve_ts(i[0], start, end)
-        second = default_dance.stock_collection.retrieve_ts(i[1], start, end)
+        first = server.stock_collection.retrieve_ts(i[0], start, end)
+        second = server.stock_collection.retrieve_ts(i[1], start, end)
 
         first_dict = feed_to_dict(first)
         second_dict = feed_to_dict(second)
@@ -67,10 +96,21 @@ def calculate_insert_mesh(list_of_tickers, start, end):
             'xy': i,
             'r': r
         }
+        result.append(post)
+    return result
 
-        default_dance.association_collection.insert(post)
+        # server.association_collection.insert(post)
 
-        c += 1
-        print(f'{c}/{n} {i} Done')
+        # c += 1
+        # print(f'{c}/{n} {i} Done')
 
-calculate_insert_mesh(ticker_list, start, end)
+# calculate_insert_mesh(ticker_list, start, end)
+
+def insert_mesh(calculated_mesh):
+    for post in calculated_mesh:
+        server.association_collection.insert(post)
+
+z = fetch_multiple_matrix_ts(ticker_list, start, end)
+k = calc_mesh(z)
+print(k)
+

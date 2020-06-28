@@ -111,3 +111,4 @@ class Default_Server:
         self.stock_collection = Stock(self.db)
         self.association_collection = Association(self.db)
 
+server = Default_Server()
