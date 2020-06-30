@@ -51,8 +51,8 @@ def insert_mesh(calculated_mesh):
         }
         server.association_collection.insert(post)
 
-start = "20071201"
-end = "20090630"
-z = fetch_multiple_matrix_ts(ticker_list)#, start, end)
-k = calc_mesh(z)
-print(k)
+# start = "20071201"
+# end = "20090630"
+# z = fetch_multiple_matrix_ts(ticker_list)#, start, end)
+# k = calc_mesh(z)
+# print(k)

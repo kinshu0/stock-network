@@ -1,0 +1,119 @@
+<?xml version='1.0' encoding='utf-8'?>
+<gexf xmlns="http://www.gexf.net/1.2draft" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gexf.net/1.2draft http://www.gexf.net/1.2draft/gexf.xsd" version="1.2">
+  <meta lastmodifieddate="2020-06-30">
+    <creator>NetworkX 2.4</creator>
+  </meta>
+  <graph defaultedgetype="undirected" mode="static" name="">
+    <nodes>
+      <node id="MMM" label="MMM" />
+      <node id="ADS" label="ADS" />
+      <node id="ANSS" label="ANSS" />
+      <node id="BAC" label="BAC" />
+      <node id="CAH" label="CAH" />
+      <node id="CINF" label="CINF" />
+      <node id="COST" label="COST" />
+      <node id="DG" label="DG" />
+      <node id="EOG" label="EOG" />
+      <node id="FRC" label="FRC" />
+      <node id="GM" label="GM" />
+      <node id="HD" label="HD" />
+      <node id="IFF" label="IFF" />
+      <node id="KMI" label="KMI" />
+      <node id="LOW" label="LOW" />
+      <node id="MU" label="MU" />
+      <node id="NLSN" label="NLSN" />
+      <node id="PCAR" label="PCAR" />
+      <node id="PGR" label="PGR" />
+      <node id="ROK" label="ROK" />
+      <node id="SBUX" label="SBUX" />
+      <node id="HSY" label="HSY" />
+      <node id="UPS" label="UPS" />
+      <node id="WAT" label="WAT" />
+    </nodes>
+    <edges>
+      <edge source="MMM" target="ADS" id="0" />
+      <edge source="MMM" target="BAC" id="1" />
+      <edge source="MMM" target="FRC" id="2" />
+      <edge source="MMM" target="GM" id="3" />
+      <edge source="MMM" target="HD" id="4" />
+      <edge source="MMM" target="KMI" id="5" />
+      <edge source="MMM" target="MU" id="6" />
+      <edge source="MMM" target="PCAR" id="7" />
+      <edge source="MMM" target="ROK" id="8" />
+      <edge source="MMM" target="SBUX" id="9" />
+      <edge source="MMM" target="UPS" id="10" />
+      <edge source="MMM" target="WAT" id="11" />
+      <edge source="ADS" target="BAC" id="12" />
+      <edge source="ADS" target="FRC" id="13" />
+      <edge source="ADS" target="GM" id="14" />
+      <edge source="ADS" target="HD" id="15" />
+      <edge source="ADS" target="IFF" id="16" />
+      <edge source="ADS" target="KMI" id="17" />
+      <edge source="ADS" target="LOW" id="18" />
+      <edge source="ADS" target="MU" id="19" />
+      <edge source="ADS" target="NLSN" id="20" />
+      <edge source="ADS" target="PCAR" id="21" />
+      <edge source="ADS" target="ROK" id="22" />
+      <edge source="ADS" target="SBUX" id="23" />
+      <edge source="ANSS" target="CINF" id="24" />
+      <edge source="ANSS" target="SBUX" id="25" />
+      <edge source="BAC" target="CINF" id="26" />
+      <edge source="BAC" target="FRC" id="27" />
+      <edge source="BAC" target="GM" id="28" />
+      <edge source="BAC" target="IFF" id="29" />
+      <edge source="BAC" target="KMI" id="30" />
+      <edge source="BAC" target="LOW" id="31" />
+      <edge source="BAC" target="MU" id="32" />
+      <edge source="BAC" target="NLSN" id="33" />
+      <edge source="BAC" target="PCAR" id="34" />
+      <edge source="BAC" target="ROK" id="35" />
+      <edge source="BAC" target="SBUX" id="36" />
+      <edge source="CINF" target="GM" id="37" />
+      <edge source="CINF" target="KMI" id="38" />
+      <edge source="CINF" target="SBUX" id="39" />
+      <edge source="COST" target="DG" id="40" />
+      <edge source="EOG" target="KMI" id="41" />
+      <edge source="FRC" target="GM" id="42" />
+      <edge source="FRC" target="NLSN" id="43" />
+      <edge source="FRC" target="PCAR" id="44" />
+      <edge source="FRC" target="ROK" id="45" />
+      <edge source="FRC" target="SBUX" id="46" />
+      <edge source="GM" target="HD" id="47" />
+      <edge source="GM" target="IFF" id="48" />
+      <edge source="GM" target="KMI" id="49" />
+      <edge source="GM" target="LOW" id="50" />
+      <edge source="GM" target="MU" id="51" />
+      <edge source="GM" target="NLSN" id="52" />
+      <edge source="GM" target="PCAR" id="53" />
+      <edge source="GM" target="ROK" id="54" />
+      <edge source="GM" target="SBUX" id="55" />
+      <edge source="HD" target="KMI" id="56" />
+      <edge source="HD" target="LOW" id="57" />
+      <edge source="HD" target="MU" id="58" />
+      <edge source="HD" target="PCAR" id="59" />
+      <edge source="HD" target="ROK" id="60" />
+      <edge source="HD" target="SBUX" id="61" />
+      <edge source="KMI" target="LOW" id="62" />
+      <edge source="KMI" target="MU" id="63" />
+      <edge source="KMI" target="PCAR" id="64" />
+      <edge source="KMI" target="ROK" id="65" />
+      <edge source="KMI" target="SBUX" id="66" />
+      <edge source="KMI" target="HSY" id="67" />
+      <edge source="KMI" target="WAT" id="68" />
+      <edge source="LOW" target="MU" id="69" />
+      <edge source="LOW" target="PCAR" id="70" />
+      <edge source="LOW" target="ROK" id="71" />
+      <edge source="LOW" target="SBUX" id="72" />
+      <edge source="MU" target="PCAR" id="73" />
+      <edge source="MU" target="ROK" id="74" />
+      <edge source="MU" target="SBUX" id="75" />
+      <edge source="MU" target="WAT" id="76" />
+      <edge source="PCAR" target="ROK" id="77" />
+      <edge source="PCAR" target="SBUX" id="78" />
+      <edge source="PGR" target="HSY" id="79" />
+      <edge source="ROK" target="SBUX" id="80" />
+      <edge source="SBUX" target="HSY" id="81" />
+      <edge source="SBUX" target="UPS" id="82" />
+    </edges>
+  </graph>
+</gexf>

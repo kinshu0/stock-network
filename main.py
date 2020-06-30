@@ -9,11 +9,11 @@ from graph_modeler import *
 
 # feed_to_db(file_name, API_key)
 
-start = "20071201"
-end = "20090630"
+start = "20190101"
+end = "20203131"
 z = fetch_multiple_matrix_ts(ticker_list, start, end)
 k = calc_mesh(z)
 
-add_stonks(z, k)
+add_stonks(ticker_list, k)
 
 export_graph()
