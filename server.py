@@ -58,41 +58,105 @@ class Stock:
         return t
 
 
-class Association:
+# class Association:
+#     def __init__(self, database):
+#         self.db = database
+#         self.collection = self.db['associations']
+
+#     def tickers_list(self):
+#         stuff_and_things = self.collection.find()
+#         result = []
+#         for x in stuff_and_things:
+#             for i in x['xy']:
+#                 if not i in result:
+#                     result.append(i)
+#         return result
+    
+#     def retrieve_association(self, ticker1):
+#         stuff_and_things = self.collection.find()
+#         result = []
+#         for x in stuff_and_things:
+#             if ticker1 in x['xy']:
+#                 result.append(x)
+#         return result
+
+#     def retrieve_association(self, ticker1, ticker2):
+#         stuff_and_things = self.collection.find()
+#         for x in stuff_and_things:
+#             if ticker1 in x['xy'] and ticker2 in x['xy'] and not ticker1 == ticker2:
+#                 return x
+#         return None
+
+#     '''
+#     Inserts data or updates the correlation data
+#     if it already exists
+#     '''
+#     def insert(self, post):
+#         self.collection.insert_one(post)
+
+class Dates:
     def __init__(self, database):
         self.db = database
-        self.collection = self.db['associations']
+        self.collection = self.db['dates']
+    def insert(self, post):
+        # k = self.collection.insert_one(post)
+        return self.collection.insert_one(post).inserted_id
+    def retrieve_date(self, start, end):
+        query = {
+            'start': start,
+            'end': end
+        }
+        return self.collection.find_one(query, {'_id': 1})
 
-    def tickers_list(self):
-        stuff_and_things = self.collection.find()
-        result = []
-        for x in stuff_and_things:
-            for i in x['xy']:
-                if not i in result:
-                    result.append(i)
-        return result
+class Mesh:
+    def __init__(self, database, dates):
+        self.db = database
+        self.collection = self.db['mesh']
+        self.dates_collection = dates
+        
+    def insert(self, post):
+        self.collection.insert_one(post)
+
+    def create_mesh(self, data, start, end):
+        date_id = self.dates_collection.insert({
+            'start': start,
+            'end': end
+        })
+        for x in data:
+            post = {
+                'a': x[0],
+                'b': x[1],
+                'r': [y for y in x[2]],
+                'ref': date_id
+            }
+            self.insert(post)
+            
+    def retrieve_mesh(self, start, end):
+        date = self.dates_collection.retrieve_date(start, end)
+        query = {'ref': date['_id']}
+        return self.collection.find(query, {'_id': 0, 'ref': 0})
+        
+
     
-    def retrieve_association(self, ticker1):
-        stuff_and_things = self.collection.find()
-        result = []
-        for x in stuff_and_things:
-            if ticker1 in x['xy']:
-                result.append(x)
-        return result
+    # def retrieve_association(self, ticker1):
+    #     stuff_and_things = self.collection.find()
+    #     result = []
+    #     for x in stuff_and_things:
+    #         if ticker1 in x['xy']:
+    #             result.append(x)
+    #     return result
 
-    def retrieve_association(self, ticker1, ticker2):
-        stuff_and_things = self.collection.find()
-        for x in stuff_and_things:
-            if ticker1 in x['xy'] and ticker2 in x['xy'] and not ticker1 == ticker2:
-                return x
-        return None
+    # def retrieve_association(self, ticker1, ticker2):
+    #     stuff_and_things = self.collection.find()
+    #     for x in stuff_and_things:
+    #         if ticker1 in x['xy'] and ticker2 in x['xy'] and not ticker1 == ticker2:
+    #             return x
+    #     return None
 
     '''
     Inserts data or updates the correlation data
     if it already exists
     '''
-    def insert(self, post):
-        self.collection.insert_one(post)
 
 
 '''
@@ -109,6 +173,8 @@ class Default_Server:
         Collections:
         '''
         self.stock_collection = Stock(self.db)
-        self.association_collection = Association(self.db)
+        # self.association_collection = Association(self.db)
+        self.dates_collection = Dates(self.db)
+        self.mesh_collection = Mesh(self.db, self.dates_collection)
 
 server = Default_Server()

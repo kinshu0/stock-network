@@ -43,13 +43,23 @@ def fetch_multiple_matrix_ts(tickers, start=None, end=None):
     b = list(zip(tickers, a))
     return b
 
-def insert_mesh(calculated_mesh):
-    for x in calculated_mesh:
-        post = {
-            'xy': [x[0], x[1]],
-            'r': x[2][1:]
-        }
-        server.association_collection.insert(post)
+# def insert_mesh(calculated_mesh):
+#     for x in calculated_mesh:
+#         post = {
+#             'xy': [x[0], x[1]],
+#             'r': x[2][1:]
+#         }
+#         server.association_collection.insert(post)
+
+# def new_mesh_insert(calculated_mesh):
+#     data = {}
+#     for x in calculated_mesh:
+#         post = {
+#             'a': x[0],
+#             'b': x[1],
+#             'r': [y for y in x[2]]
+#         }
+#         data.update(post)
 
 # start = "20071201"
 # end = "20090630"
