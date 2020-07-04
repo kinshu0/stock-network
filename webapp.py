@@ -24,7 +24,7 @@ stock_attributes = client.retrieve_ticker_attributes()
 stock_atts = pd.DataFrame(stock_attributes, columns=['Ticker', 'Sector', 'Company_Name'])
 
 ##############################################################################################################################################################
-def network_graph(yearRange, ticker_to_search):
+def network_graph(yearRange, ticker_to_search, threshold=0.6):
 
     start = int(f'{yearRange[0]}0101')
     end = int(f'{yearRange[1]}1231')
@@ -35,31 +35,22 @@ def network_graph(yearRange, ticker_to_search):
     return_atts = pd.DataFrame(stock_returns, columns=['Ticker', 'open', 'high', 'low', 'close', 'volume'])
 
     edges_df = pd.DataFrame(mesh, columns=['Symbol1', 'Symbol2', 'r_open', 'r_high', 'r_low', 'r_close', 'r_volume'])
+    
+    for index in range(0,len(edges_df)):
+        if edges_df['r_close'][index] < threshold:
+            edges_df.drop(axis=0, index=index, inplace=True)
+            continue
+
 
     node_atts = return_atts
 
     node_atts['Sector'] = stock_atts['Sector']
     node_atts['Company_Name'] = stock_atts['Company_Name']
 
-    # nodes_df = pd.DataFrame()
-
-    # tickers = client.ticker_list
-
-    # edge1 = pd.read_csv('edge1.csv')
-    # node1 = pd.read_csv('node1.csv')
-
-    # filter the record by datetime, to enable interactive control through the input box
-    # edge1['Datetime'] = "" # add empty Datetime column to edge1 dataframe
-    # ticker_set=set() # contain unique account
     ticker_set = set(client.ticker_list)
 
-    # # for index in range(0,len(edge1)):
-    # #     edge1['Datetime'][index] = datetime.strptime(edge1['Date'][index], '%d/%m/%Y')
-    # #     if edge1['Datetime'][index].year<yearRange[0] or edge1['Datetime'][index].year>yearRange[1]:
-    # #         edge1.drop(axis=0, index=index, inplace=True)
-    # #         continue
-    # #     ticker_set.add(edge1['Source'][index])
-    # #     ticker_set.add(edge1['Target'][index])
+
+    
 
     # to define the centric point of the networkx layout
     shells=[]
