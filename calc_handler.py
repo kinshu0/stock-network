@@ -43,6 +43,18 @@ def fetch_multiple_matrix_ts(tickers, start=None, end=None):
     b = list(zip(tickers, a))
     return b
 
+def calc_returns(data):
+    a = date_sort(data)
+    c = []
+    for x in a:
+        op = np.array(x[1][0])[1:]/np.array(x[1][-1])[1:]
+        c.append(op)
+    a[:, 1] = c
+    q = []
+    for i in range(len(a)):
+        q.append(([a[i][0], *a[i][1]]))
+    return q
+
 # def insert_mesh(calculated_mesh):
 #     for x in calculated_mesh:
 #         post = {

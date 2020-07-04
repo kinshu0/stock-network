@@ -57,6 +57,9 @@ class Stock:
                 t.append(x)
         return t
 
+    def retrieve_attributes(self):
+        return self.collection.find({}, {'_id': 0, 'ts': 0})
+
 
 # class Association:
 #     def __init__(self, database):
@@ -118,10 +121,11 @@ class Mesh:
         self.collection.insert_one(post)
 
     def create_mesh(self, data, start, end):
-        date_id = self.dates_collection.insert({
-            'start': start,
-            'end': end
-        })
+        # date_id = self.dates_collection.insert({
+        #     'start': start,
+        #     'end': end
+        # })
+        date_id = self.dates_collection.retrieve_date(start, end)['_id']
         for x in data:
             post = {
                 'a': x[0],
@@ -137,7 +141,32 @@ class Mesh:
         return self.collection.find(query, {'_id': 0, 'ref': 0})
         
 
-    
+class Returns:
+    def __init__(self, database, dates):
+        self.db = database
+        self.collection = self.db['returns']
+        self.dates_collection = dates
+
+    def insert(self, post):
+        self.collection.insert_one(post)
+
+    def create_returns(self, data, start, end):
+        # date_id = self.dates_collection.insert({
+        #     'start': start,
+        #     'end': end
+        # })
+        date_id = self.dates_collection.retrieve_date(start, end)['_id']
+        for x in data:
+            post = {
+                'a': x[0],
+                'returns': [y for y in x[1:]],
+                'ref': date_id
+            }
+            self.insert(post)
+    def retrieve_returns(self, start, end):
+        date = self.dates_collection.retrieve_date(start, end)
+        query = {'ref': date['_id']}
+        return self.collection.find(query, {'_id': 0, 'ref': 0})
     # def retrieve_association(self, ticker1):
     #     stuff_and_things = self.collection.find()
     #     result = []
@@ -176,5 +205,6 @@ class Default_Server:
         # self.association_collection = Association(self.db)
         self.dates_collection = Dates(self.db)
         self.mesh_collection = Mesh(self.db, self.dates_collection)
+        self.returns_collection = Returns(self.db, self.dates_collection)
 
 server = Default_Server()
