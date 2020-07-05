@@ -15,7 +15,7 @@ import client
 # import the css template, and pass the css template into dash
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
-app.title = "Transaction Network"
+app.title = "Stock Correlation Network"
 
 YEAR=[2010, 2019]
 ACCOUNT="A0001"
@@ -50,8 +50,6 @@ def network_graph(yearRange, ticker_to_search, threshold=0.6):
     ticker_set = set(client.ticker_list)
 
 
-    
-
     # to define the centric point of the networkx layout
     shells=[]
     shell1=[]
@@ -63,15 +61,7 @@ def network_graph(yearRange, ticker_to_search, threshold=0.6):
             shell2.append(symbol)
     shells.append(shell2)
 
-    # G = nx.from_pandas_edgelist(edges_df, 'Symbol1', 'Symbol2', ['Symbol1', 'Symbol2', 'r_open', 'r_high', 'r_low', 'r_close', 'r_volume'], create_using=nx.Graph())
-    # G = nx.from_pandas_edgelist(edges_df, 'Symbol1', 'Symbol2', edge_attr=True, create_using=nx.Graph())
     G = nx.from_pandas_edgelist(edges_df, 'Symbol1', 'Symbol2', edge_attr=True)
-
-    # color=nx.get_edge_attributes(G,'r_close')
-
-    # t = color[('MMM', 'ADS')]
-
-    # G = nx.from_pandas_edgelist(edge1, 'Source', 'Target', ['Source', 'Target', 'TransactionAmt', 'Date'], create_using=nx.MultiDiGraph())
 
     for col in node_atts.columns:
         if col == 'Ticker':
@@ -79,8 +69,6 @@ def network_graph(yearRange, ticker_to_search, threshold=0.6):
         nx.set_node_attributes(G, node_atts.set_index('Ticker')[col].to_dict(), col)
 
 
-    # nx.set_node_attributes(G, node1.set_index('Account')['CustomerName'].to_dict(), 'CustomerName')
-    # nx.set_node_attributes(G, node1.set_index('Account')['Type'].to_dict(), 'Type')
     # # pos = nx.layout.spring_layout(G)
     # # pos = nx.layout.circular_layout(G)
     # # nx.layout.shell_layout only works for more than 3 nodes
@@ -122,17 +110,13 @@ def network_graph(yearRange, ticker_to_search, threshold=0.6):
     colors = list(Color('lightcoral').range_to(Color('darkred'), len(G.edges())))
     colors = ['rgb' + str(x.rgb) for x in colors]
 
-    # temp = nx.get_edge_attributes(G,'r_close')
 
 
     index = 0
     for edge in G.edges:
-        # k = float(G.edges[edge]['r_close'])
-        # t = node_atts
 
         x0, y0 = G.nodes[edge[0]]['pos']
         x1, y1 = G.nodes[edge[1]]['pos']
-        # weight = float(G.edges[edge]['TransactionAmt']) / max(edge1['TransactionAmt']) * 10
 
 
         weight = float(G.edges[edge]['r_close']) / max(edges_df['r_close']) * 10
@@ -153,9 +137,7 @@ def network_graph(yearRange, ticker_to_search, threshold=0.6):
         x, y = G.nodes[node]['pos']
         hovertext = "Company Name: " + str(G.nodes[node]['Company_Name']) + "<br>" + "Sector: " + str(
             G.nodes[node]['Sector'])
-        # hovertext = "CustomerName: " + str(G.nodes[node]['CustomerName']) + "<br>" + "AccountType: " + str(
-        #     G.nodes[node]['Type'])
-        # text = node1['Account'][index]
+
         text = stock_atts['Ticker'][index]
         node_trace['x'] += tuple([x])
         node_trace['y'] += tuple([y])
@@ -236,7 +218,7 @@ styles = {
 
 app.layout = html.Div([
     #########################Title
-    html.Div([html.H1("Transaction Network Graph")],
+    html.Div([html.H1("Stock Network Graph")],
              className="row",
              style={'textAlign': "center"}),
     #############################################################################################define the row
@@ -283,11 +265,11 @@ app.layout = html.Div([
                         className="twelve columns",
                         children=[
                             dcc.Markdown(d("""
-                            **Account To Search**
+                            **Ticker To Search**
 
-                            Input the account to visualize.
+                            Input the Ticker to visualize.
                             """)),
-                            dcc.Input(id="input1", type="text", placeholder="Account"),
+                            dcc.Input(id="input1", type="text", placeholder="Ticker"),
                             html.Div(id="output")
                         ],
                         style={'height': '300px'}
