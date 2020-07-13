@@ -10,7 +10,6 @@ import client
 
 
 stock_attributes = client.retrieve_ticker_attributes()
-stock_atts = pd.DataFrame(stock_attributes, columns=['Ticker', 'Sector', 'Company_Name'])
 
 palette = [
     'rgb(254,255,88)',
@@ -23,26 +22,45 @@ palette = [
     'rgb(0.9,0.859,0.039)',
     'rgb(0.918,0.988,0.039)',
     'rgb(0.9,0.714,0.039)',
-    'rgb(0.565,0.925,0.035)'
+    'rgb(0.565,0.925,0.035)',
+    'rgb(255, 255, 255)'
 ]
+
+print('Step 2: graph_modeler')
+
+
+def diff(first, second):
+    second = set(second)
+    return [item for item in first if item not in second]
 
 def network_graph(yearRange, ticker_to_search, threshold=0.6, mode='Sector'):
 
-    # start = int(f'{yearRange[0]}0101')
-    # end = int(f'{yearRange[1]}1231')
-    start = yearRange[0]
-    end = yearRange[1]
+    start = int(f'{yearRange[0]}0101')
+    end = int(f'{yearRange[1]}1231')
+    # start = yearRange[0]
+    # end = yearRange[1]
 
     mesh = client.retrieve_mesh(start, end)
 
     stock_returns = client.retrieve_returns(start, end)
     return_atts = pd.DataFrame(stock_returns, columns=['Ticker', 'open', 'high', 'low', 'close', 'volume'])
 
+
+    
+    yuh = []
+    for x in stock_attributes:
+        bruh = list(return_atts['Ticker'])
+        if x[0] in bruh:
+            yuh.append(x)
+
+    
+    stock_atts = pd.DataFrame(yuh, columns=['Ticker', 'Sector', 'Company_Name'])
+
+
     edges_df = pd.DataFrame(mesh, columns=['Symbol1', 'Symbol2', 'r_open', 'r_high', 'r_low', 'r_close', 'r_volume'])
     
     #drop edges with correlation less than threshold
     indices = []
-
     for index in range(0,len(edges_df)):
         if edges_df['r_close'][index] < threshold:
             indices.append(index)
@@ -51,8 +69,33 @@ def network_graph(yearRange, ticker_to_search, threshold=0.6, mode='Sector'):
     edges_df.drop(indices, inplace=True)
 
 
+    
+    # for index in range(len(stock_atts)):
+    #     if not stock_atts['Ticker'][index] in node_atts['Ticker']
+
     node_atts = return_atts
 
+    # missing_data = diff(stock_atts['Ticker'], node_atts['Ticker'])
+
+    # matching_data = pd.DataFrame(stock_atts.Ticker != missing_data)
+    # matching_data = stock_atts
+    # indices = []
+    # for index in range(0,len(matching_data)):
+        # for x in missing_data:
+            # if matching_data['Ticker'][index] == x:
+                # indices.append(index)
+    # matching_data.drop(indices, inplace=True)
+
+    # matching_data.sort_values('Ticker')
+    # node_atts.sort_values('Ticker')
+
+    # test = node_atts['Ticker'] == stock_atts['Ticker']
+
+    # node_atts['Sector'] = matching_data['Sector']
+    # node_atts['Company_Name'] = matching_data['Company_Name']
+    # z = [x for x in node_atts['Sector']]
+    # places = z.count(np.nan)
+    # kt = matching_data['Ticker'][87]
     node_atts['Sector'] = stock_atts['Sector']
     node_atts['Company_Name'] = stock_atts['Company_Name']
 
@@ -133,6 +176,7 @@ def network_graph(yearRange, ticker_to_search, threshold=0.6, mode='Sector'):
     ############################################################################################################################################################
     colors = list(Color('lightcoral').range_to(Color('darkred'), len(G.edges())))
     colors = ['rgb' + str(x.rgb) for x in colors]
+    colors = ['rgb(0, 0, 0)' for x in colors]
 
 
 

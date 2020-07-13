@@ -38,10 +38,27 @@ Format of output:
 '''
 def fetch_multiple_matrix_ts(tickers, start=None, end=None):
     a = []
-    for x in tickers:
-        a.append( fetch_matrix_ts(x, start, end) )
-    b = list(zip(tickers, a))
+    excluded_indices = []
+    for x in range(len(tickers)):
+        single_ts_matrix = fetch_matrix_ts(tickers[x], start, end)
+        '''
+        Remove tickers that don't have data for the start to end time range,
+        affects: stock_returns and correlation stuff
+        '''
+        if len(single_ts_matrix) == 0:
+            excluded_indices.append(x)
+            continue
+        a.append( single_ts_matrix )
+    tickers_b = np.delete(tickers, excluded_indices)
+    b = list(zip(tickers_b, a))
     return b
+
+# def fetch_multiple_matrix_ts(tickers, start=None, end=None):
+#     a = []
+#     for x in tickers:
+#         a.append( fetch_matrix_ts(x, start, end) )
+#     b = list(zip(tickers, a))
+#     return b
 
 def calc_returns(data):
     a = date_sort(data)

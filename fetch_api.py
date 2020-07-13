@@ -15,7 +15,7 @@ class Fetch:
     '''
     def alpha(self, symbol, time_interval=0):
         ts = TimeSeries(self.key)
-        stock = ts.get_daily(symbol=symbol)
+        stock = ts.get_daily(symbol=symbol, outputsize='full')
 
         return stock
         

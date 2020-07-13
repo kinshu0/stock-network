@@ -71,6 +71,8 @@ def link_relatives(data):
         for x in range(end):
             r = np.array(data[j][1][x+1][1:])
             q = np.array(data[j][1][x][1:])
+            if r[-1] == 0:
+                r[-1] = 1
             a = q/r
             s = [data[j][1][x][0], data[j][1][x+1][0], *a]
             result.append( s )

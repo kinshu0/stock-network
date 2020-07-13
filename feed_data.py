@@ -60,14 +60,6 @@ def api_to_db_format(ticker, sector, ts, comp):
     }
     return stocks_post
 
-
-# # url = 'mongodb://localhost:27017/'
-# # database_name = 'dev2'
-# # mongo_connection = Database(url, database_name)
-# # db = mongo_connection.db
-# # stocks_collection = Stock(db)
-
-
 # API_key = 'HB8BGAK56N2T7BBE'
 # file_name = 'symbols.csv'
 # n = 25 
@@ -79,7 +71,7 @@ to the database, sleep_period is the amount of time to wait before
 fetching next ticker from API, n is the number of tickers to fetch from
 file
 '''
-def feed_to_db(file_name, API_key, n=None, stocks_collection=server.stock_collection, sleep_period=13):
+def feed_to_db(file_name, API_key, n=None, stocks_collection=server.stock_collection, sleep_period=13, start=None):
     fetcher = Fetch(API_key)
 
     index_data = read_index_data(file_name)
@@ -90,16 +82,22 @@ def feed_to_db(file_name, API_key, n=None, stocks_collection=server.stock_collec
         indices = np.linspace(0, len(index_data[0]), num=n, dtype=int)
     else:
         n = len(index_data[0])
-        indices = range(n)
+        if start == None:
+            indices = range(n)
+        else:
+            indices = range(start, n)
 
     for i in indices:
         ticker = index_data[0][i]
         comp = index_data[1][i]
         sector = index_data[2][i]
-        ts = fetcher.alpha(ticker)[0]
+        try:
+            ts = fetcher.alpha(ticker)[0]
+        except ValueError:
+            print(f'Unable to Fetch Data for Ticker: {ticker} Company Name: {comp}')
+            continue
         stocks_post = api_to_db_format(ticker, sector, ts, comp)
         # stocks_post_id = db['stocks'].insert_one(stocks_post)
         stocks_collection.insert(stocks_post)
-        print(f'{comp} -> {counter}/{n} done...')
+        print(f'{comp} -> {i+1}/{indices[-1]+1} done...')
         time.sleep(sleep_period)
-        counter += 1
