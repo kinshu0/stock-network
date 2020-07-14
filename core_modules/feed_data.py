@@ -1,9 +1,8 @@
 import numpy as np
 import time
 
-from fetch_api import *
-from server import *
-
+from core_modules.fetch_api import *
+from core_modules.server import *
 
 '''
 Loading symbol, name, sector data from csv file

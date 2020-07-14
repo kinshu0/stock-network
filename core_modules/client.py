@@ -1,5 +1,5 @@
-from server import *
-from calc_handler import *
+from core_modules.server import *
+from core_modules.calc_handler import *
 
 def initialize_dates_data(start, end):
     # start = str(start)

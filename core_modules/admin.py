@@ -1,4 +1,4 @@
-import feed_data
+import core_modules.feed_data as feed_data
 
 API_key = 'HB8BGAK56N2T7BBE'
 file_name = 'symbols.csv'

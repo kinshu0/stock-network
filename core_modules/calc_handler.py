@@ -1,5 +1,5 @@
-from calc import *
-from server import *
+from core_modules.calc import *
+from core_modules.server import *
 
 from itertools import combinations
 

@@ -1,7 +1,11 @@
-from server import *
+import core_modules.server as server
+
 import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
+
+# server = core_modules.server.server
+server = server.server
 
 lot = server.stock_collection.tickers_list()
 

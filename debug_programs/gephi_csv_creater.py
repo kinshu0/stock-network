@@ -1,8 +1,9 @@
-from server import *
+import core_modules.server as server
+# from server import *
 
 file_name = 'lol.csv'
 
-initiate_default_dance = Default_Server()
+initiate_default_dance = server.Default_Server()
 
 googoogaagaa = initiate_default_dance.association_collection.tickers_list()
 

@@ -6,7 +6,7 @@ import numpy as np
 import pandas as pd
 from colour import Color
 
-import client
+from core_modules import client
 
 
 stock_attributes = client.retrieve_ticker_attributes()

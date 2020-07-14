@@ -6,8 +6,10 @@ import pandas as pd
 from textwrap import dedent as d
 import json
 
-from graph_modeler import network_graph
-import client
+from webapp.back_end.graph_modeler import network_graph
+from core_modules import client
+# from graph_modeler import network_graph
+# import client
 
 from datetime import datetime as dt
 
