@@ -26,8 +26,6 @@ palette = [
     'rgb(255, 255, 255)'
 ]
 
-print('Step 2: graph_modeler')
-
 
 def diff(first, second):
     second = set(second)

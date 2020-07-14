@@ -16,7 +16,7 @@ from datetime import datetime as dt
 app = dash.Dash(__name__)#, external_stylesheets=external_stylesheets)
 app.title = "Stock Correlation Network"
 
-YEAR=[2010, 2019]
+YEAR=[2017, 2019]
 search="BAC"
 
 
