@@ -18,7 +18,7 @@ from datetime import datetime as dt
 app = dash.Dash(__name__)#, external_stylesheets=external_stylesheets)
 app.title = "Stock Correlation Network"
 
-YEAR=[2017, 2019]
+YEAR=[2010, 2019]
 search="BAC"
 
 
@@ -43,16 +43,14 @@ app.layout = html.Div([
             html.Div(
                 className="two columns",
                 children=[
+                    dcc.Markdown(d("""
+                            Enter the year range to visualize
+                            """)),
                     # dcc.Markdown(d("""
                     #         **Time Range To Visualize**
 
                     #         Slide the bar to define year range.
                     #         """)),
-                    dcc.Markdown(d("""
-                            **Time Range To Visualize**
-
-                            Slide the bar to define year range.
-                            """)),
                     html.Div(
                         className="twelve columns",
                         children=[
@@ -88,11 +86,17 @@ app.layout = html.Div([
                     html.Div(
                         className="twelve columns",
                         children=[
-                            dcc.Markdown(d("""
-                            **Ticker To Search**
+                            # dcc.Markdown(d("""
+                            # **Ticker To Search**
 
-                            Input the Ticker to visualize.
-                            """)),
+                            # Input the Ticker to visualize.
+                            # """)),
+                            
+                            dcc.Markdown(d("""
+                                Kinshu Gupta
+                                email: kinshugupta2002@gmail.com
+                                phone: +1-860-995-9086
+                                """)),
                             dcc.Input(id="input1", type="text", placeholder="Ticker"),
                             html.Div(id="output")
                         ],
