@@ -193,7 +193,7 @@ Define and instantiate database schema
 '''
 class Default_Server:
     def __init__(self):
-        self.url = 'mongodb://localhost:27017/'
+        self.url = 'mongodb+srv://admin1:temppassword@cluster0.ni28x.gcp.mongodb.net/test'
         self.database_name = 'dev3'
         self.mongo_connection = Database(self.url, self.database_name)
         self.db = self.mongo_connection.db
