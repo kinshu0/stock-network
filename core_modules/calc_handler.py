@@ -4,7 +4,6 @@ from core_modules.mongo_driver import *
 
 from itertools import combinations
 
-server = Default_Server()
 
 ticker_list = server.stock_collection.tickers_list()
 

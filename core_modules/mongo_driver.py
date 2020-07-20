@@ -133,9 +133,10 @@ class Returns:
 Define and instantiate database schema
 '''
 class Default_Server:
-    def __init__(self):
-        self.url = 'mongodb://localhost:27017/'
-        self.database_name = 'dev3'
+    def __init__(self, URL, DB_name):
+        self.url = URL
+        self.database_name = DB_name
+
         self.mongo_connection = Database(self.url, self.database_name)
         self.db = self.mongo_connection.db
 
@@ -147,4 +148,7 @@ class Default_Server:
         self.mesh_collection = Mesh(self.db, self.dates_collection)
         self.returns_collection = Returns(self.db, self.dates_collection)
 
-server = Default_Server()
+
+def mongo_connection(URL, DB_name):
+    global server
+    server = Default_Server(URL, DB_name)
