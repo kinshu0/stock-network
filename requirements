@@ -1,0 +1,10 @@
+alpha-vantage==2.2.0
+colour==0.1.5
+dash==1.13.4
+Flask==1.1.2
+matplotlib==3.2.2
+networkx==2.4
+numpy==1.18.4
+pandas==1.0.5
+plotly==4.8.2
+pymongo==3.10.1
