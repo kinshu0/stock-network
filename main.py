@@ -11,4 +11,4 @@ mongo_connection(configuration['serverUrl'], configuration['dbName'])
 
 import webapp.front_end.web_application
 
-webapp.front_end.web_application.app.run_server(debug=True)
+webapp.front_end.web_application.app.run_server(debug=bool(configuration['debug']), host='127.0.0.1', port=8080) # Keep the debug variable empty for false and anything else for true
