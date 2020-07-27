@@ -1,5 +1,5 @@
 {
-    "serverUrl": "mongodb://localhost:27017/",
+    "serverUrl": "mongodb+srv://admin1:temppassword@cluster0.ni28x.gcp.mongodb.net/test",
     "dbName": "dev3",
-    "debug": "1"
+    "debug": ""
 }
